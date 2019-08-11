@@ -9,16 +9,22 @@ public class BookCopy {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @Column
-    private Long titleId;
-
-    @Column
+    @ManyToOne
+    @JoinColumn(name = "TITLE_ID")
+    private Title title;
     private Status status;
+
 
     public BookCopy() {}
 
-    public BookCopy(Long titleId, Status status) {
-        this.titleId = titleId;
+    public BookCopy(Title title, Status status) {
+        this.title = title;
+        this.status = status;
+    }
+
+    public BookCopy(Long id, Title title, Status status) {
+        this.id = id;
+        this.title = title;
         this.status = status;
     }
 
@@ -26,8 +32,12 @@ public class BookCopy {
         return id;
     }
 
-    public Long getTitleId() {
-        return titleId;
+    public Title getTitle() {
+        return title;
+    }
+
+    public void setTitle(Title title) {
+        this.title = title;
     }
 
     public Status getStatus() {

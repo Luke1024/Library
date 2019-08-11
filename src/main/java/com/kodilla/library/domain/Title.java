@@ -1,21 +1,24 @@
 package com.kodilla.library.domain;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity(name = "titles")
 public class Title {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-
-    @Column
     private String title;
-
-    @Column
     private String author;
-
-    @Column
     private int publicationYear;
+
+    @OneToMany(
+            targetEntity = BookCopy.class,
+            mappedBy = "title",
+            cascade = CascadeType.ALL,
+            fetch = FetchType.LAZY
+    )
+    private List<BookCopy> bookCopies;
 
     public Title() {}
 
@@ -30,6 +33,14 @@ public class Title {
         this.title = title;
         this.author = author;
         this.publicationYear = publicationYear;
+    }
+
+    public List<BookCopy> getBookCopies() {
+        return bookCopies;
+    }
+
+    public void setBookCopies(List<BookCopy> bookCopies) {
+        this.bookCopies = bookCopies;
     }
 
     public Long getId() {

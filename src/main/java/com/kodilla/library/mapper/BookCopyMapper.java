@@ -11,10 +11,7 @@ import java.util.stream.Collectors;
 public class BookCopyMapper {
     public List<BookCopyDto> mapToBookCopyDtoList(final List<BookCopy> bookCopyList){
         return bookCopyList.stream()
-                .map(b -> new BookCopyDto(b.getTitleId(), b.getStatus())).collect(Collectors.toList());
-    }
-
-    public BookCopy mapToBookCopy(BookCopyDto bookCopyDto){
-        return new BookCopy(bookCopyDto.getTitleId(), bookCopyDto.getStatus());
+                .map(b -> new BookCopyDto(b.getTitle().getId(), b.getTitle().getTitle(), b.getStatus()))
+                .collect(Collectors.toList());
     }
 }

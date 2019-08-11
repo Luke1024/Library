@@ -4,6 +4,8 @@ public class RentDto {
     private Long userId;
     private Long bookCopyId;
 
+    public RentDto() {}
+
     public RentDto(Long userId, Long bookCopyId) {
         this.userId = userId;
         this.bookCopyId = bookCopyId;

@@ -6,6 +6,8 @@ public class BookCopyStatusChangerDto {
     private Long id;
     private Status status;
 
+    public BookCopyStatusChangerDto() {}
+
     public BookCopyStatusChangerDto(Long id, Status status) {
         this.id = id;
         this.status = status;

@@ -15,11 +15,11 @@ public interface BookCopyRepository extends CrudRepository<BookCopy, Long> {
     @Override
     BookCopy save(BookCopy bookCopy);
 
-    BookCopy findById(Long id);
+    Optional<BookCopy> findById(Long id);
 
-    Optional<BookCopy> deleteById(Long id);
+    //Optional<BookCopy> deleteById(Long id);
 
-    List<BookCopy> findBookCopiesByTitleId(Long titleId);
+    //List<BookCopy> findBookCopiesByTitleId(Long titleId);
 
     @Override
     long count();
