@@ -17,8 +17,6 @@ public interface TitleRepository extends CrudRepository<Title, Long> {
 
     Optional<Title> deleteById(Long id);
 
-
-
     @Override
     long count();
 }

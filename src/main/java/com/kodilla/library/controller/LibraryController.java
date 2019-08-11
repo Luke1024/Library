@@ -1,5 +1,6 @@
 package com.kodilla.library.controller;
 
+import com.kodilla.library.controller.controllerExceptions.LibraryDatabaseException;
 import com.kodilla.library.domain.dto.*;
 import com.kodilla.library.mapper.BookCopyMapper;
 import com.kodilla.library.mapper.TitleMapper;
@@ -33,7 +34,6 @@ public class LibraryController {
     @Autowired
     private RentService rentService;
 
-
     //Get Type
     @RequestMapping(method = RequestMethod.GET, value = "/users")
     public List<UserDto> getUsers(){
@@ -46,7 +46,7 @@ public class LibraryController {
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "/copies/{titleId}")
-    public List<BookCopyDto> getAvailableCopiesByTitleId(@PathVariable Long titleId) {
+    public List<BookCopyDto> getAvailableCopiesByTitleId(@PathVariable Long titleId) throws LibraryDatabaseException {
         return bookCopyMapper.mapToBookCopyDtoList(bookCopyService.getAllAvailableCopiesByTitleId(titleId));
     }
 
@@ -62,23 +62,23 @@ public class LibraryController {
     }
 
     @RequestMapping(method = RequestMethod.POST, value = "/copies")
-    public void addBookCopy(@RequestBody BookCopyDto bookCopyDto){
-        bookCopyService.saveBookCopy(bookCopyMapper.mapToBookCopy(bookCopyDto));
+    public void addBookCopy(@RequestBody BookCopyDto bookCopyDto) throws LibraryDatabaseException {
+        bookCopyService.saveBookCopyFromBookCopyDto(bookCopyDto);
     }
 
     //Put type
     @RequestMapping(method = RequestMethod.PUT, value = "/copies/status")
-    public void changeBookCopyStatus(@RequestBody BookCopyStatusChangerDto bookCopyStatusChangerDto){
+    public void changeBookCopyStatus(@RequestBody BookCopyStatusChangerDto bookCopyStatusChangerDto) throws LibraryDatabaseException {
         bookCopyService.changeBookStatus(bookCopyStatusChangerDto);
     }
 
     @RequestMapping(method = RequestMethod.PUT, value = "/rent/borrow")
-    public void borrowABook(@RequestBody RentDto rentDto){
+    public void borrowABook(@RequestBody RentDto rentDto) throws LibraryDatabaseException {
         rentService.borrowABook(rentDto);
     }
 
     @RequestMapping(method = RequestMethod.PUT, value = "/rent/return")
-    public void returnCopy(@RequestBody RentDto rentDto){
+    public void returnCopy(@RequestBody RentDto rentDto) throws LibraryDatabaseException {
         rentService.returnABook(rentDto);
     }
 }

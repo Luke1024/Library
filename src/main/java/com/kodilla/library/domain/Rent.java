@@ -9,24 +9,33 @@ public class Rent {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @Column
-    private Long userId;
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @JoinColumn(name = "USER_ID")
+    private User user;
 
-    @Column
-    private Long bookCopyId;
-
-    @Column
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @JoinColumn(name = "BOOK_COPY_ID")
+    private BookCopy bookCopy;
     private LocalDate dateOfRental;
-
-    @Column
     private LocalDate dateOfReturn;
 
     public Rent() {}
 
-    public Rent(Long userId, Long bookCopyId, LocalDate dateOfRental, LocalDate dateOfReturn) {
-        this.userId = userId;
-        this.bookCopyId = bookCopyId;
+    public Rent(User user, BookCopy bookCopy, LocalDate dateOfRental) {
+        this.user = user;
+        this.bookCopy = bookCopy;
         this.dateOfRental = dateOfRental;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public void setBookCopy(BookCopy bookCopy) {
+        this.bookCopy = bookCopy;
+    }
+
+    public void setDateOfReturn(LocalDate dateOfReturn) {
         this.dateOfReturn = dateOfReturn;
     }
 
@@ -34,12 +43,12 @@ public class Rent {
         return id;
     }
 
-    public Long getUserId() {
-        return userId;
+    public User getUser() {
+        return user;
     }
 
-    public Long getBookCopyId() {
-        return bookCopyId;
+    public BookCopy getBookCopy() {
+        return bookCopy;
     }
 
     public LocalDate getDateOfRental() {
