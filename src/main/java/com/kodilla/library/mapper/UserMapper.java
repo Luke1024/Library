@@ -21,6 +21,13 @@ public class UserMapper {
                 .collect(Collectors.toList());
     }
 
+    public UserDto mapToUserDto(User user){
+        return new UserDto(user.getId()
+                , user.getFirstName()
+                , user.getLastName()
+                , user.getRegistrationDate());
+    }
+
     public User mapToUserFromCreationDto(final UserCreationDto userCreationDto){
         return new User(
                 userCreationDto.getFirstName(),

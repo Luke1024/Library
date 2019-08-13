@@ -1,6 +1,5 @@
 package com.kodilla.library.mapper;
 
-import com.kodilla.library.controller.LibraryController;
 import com.kodilla.library.domain.BookCopy;
 import com.kodilla.library.domain.Status;
 import com.kodilla.library.domain.Title;
@@ -8,7 +7,6 @@ import com.kodilla.library.domain.dto.BookCopyDto;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 

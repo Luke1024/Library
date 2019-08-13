@@ -1,23 +1,18 @@
 package com.kodilla.library.service;
 
-import com.kodilla.library.controller.LibraryController;
 import com.kodilla.library.controller.controllerExceptions.LibraryDatabaseException;
 import com.kodilla.library.domain.*;
 import com.kodilla.library.domain.dto.BookCopyDto;
-import com.kodilla.library.domain.dto.RentDto;
-import com.kodilla.library.mapper.BookCopyMapper;
-import org.junit.Assert;
+import com.kodilla.library.domain.dto.BorrowReturnDto;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import javax.transaction.Transactional;
 
 import static com.shazam.shazamcrest.MatcherAssert.assertThat;
-import static com.shazam.shazamcrest.matcher.Matchers.sameBeanAs;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -37,7 +32,6 @@ public class ServiceTest {
 
     @Autowired
     private RentService rentService;
-
 
     private static User user = new User("Firstname", "Lastname", LocalDate.now());
     private static Title title = new Title("Title", "Author", 2019);
@@ -64,11 +58,8 @@ public class ServiceTest {
     private void borrowABook() throws LibraryDatabaseException {
         List<User> userList = userService.getAllUsers();
         List<Title> titleList = titleService.getAllTitles();
-        rentService.borrowABook(new RentDto(userList.get(0).getId(), titleList.get(0).getId()));
-
+        rentService.borrowABook(new BorrowReturnDto(userList.get(0).getId(), titleList.get(0).getId()));
     }
-
-
 
     @Test
     public void libraryTest() throws LibraryDatabaseException {

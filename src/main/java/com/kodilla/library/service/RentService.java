@@ -5,7 +5,7 @@ import com.kodilla.library.domain.BookCopy;
 import com.kodilla.library.domain.Rent;
 import com.kodilla.library.domain.Status;
 import com.kodilla.library.domain.User;
-import com.kodilla.library.domain.dto.RentDto;
+import com.kodilla.library.domain.dto.BorrowReturnDto;
 import com.kodilla.library.repository.BookCopyRepository;
 import com.kodilla.library.repository.RentRepository;
 import com.kodilla.library.repository.UserRepository;
@@ -21,7 +21,7 @@ import java.util.stream.Collectors;
 
 @Service
 public class RentService {
-    private static final Logger LOGGER = LoggerFactory.getLogger(BookCopyService.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(RentService.class);
 
     @Autowired
     private RentRepository rentRepository;
@@ -32,11 +32,30 @@ public class RentService {
     @Autowired
     private UserRepository userRepository;
 
-    public void borrowABook(RentDto rentDto) throws LibraryDatabaseException {
+    public List<Rent> getAllRents(){
+        return rentRepository.findAll();
+    }
+
+    public Rent findRentById(Long id) throws LibraryDatabaseException {
+        Optional<Rent> rent = rentRepository.findById(id);
+        if(rent.isPresent()) {
+            LOGGER.info("Rent with id: " + id + " found.");
+            return rent.get();
+        } else {
+            LOGGER.error(LibraryDatabaseException.RENT_NOT_FOUND);
+            throw new LibraryDatabaseException(LibraryDatabaseException.RENT_NOT_FOUND);
+        }
+    }
+
+    public void deleteRentById(Long id){
+        rentRepository.deleteById(id);
+    }
+
+    public void borrowABook(BorrowReturnDto borrowReturnDto) throws LibraryDatabaseException {
         boolean bookCopyFound = false;
         boolean userFound = false;
-        Optional<BookCopy> bookCopy = bookCopyRepository.findById(rentDto.getBookCopyId());
-        Optional<User> user = userRepository.findById(rentDto.getUserId());
+        Optional<BookCopy> bookCopy = bookCopyRepository.findById(borrowReturnDto.getBookCopyId());
+        Optional<User> user = userRepository.findById(borrowReturnDto.getUserId());
         if(bookCopy.isPresent()) {
             bookCopyFound = true;
             LOGGER.info("Book copy with id: " + bookCopy.get().getId() + " found.");
@@ -56,9 +75,9 @@ public class RentService {
     }
 
 
-    public void returnABook(RentDto rentDto) throws LibraryDatabaseException {
+    public void returnABook(BorrowReturnDto borrowReturnDto) throws LibraryDatabaseException {
         List<Rent> rents = rentRepository.findAll().stream()
-                .filter(r -> r.getBookCopy().getId().equals(rentDto.getBookCopyId())).collect(Collectors.toList());
+                .filter(r -> r.getBookCopy().getId().equals(borrowReturnDto.getBookCopyId())).collect(Collectors.toList());
         if(rents.size()==1){
              Rent rent = rents.get(0);
              rent.getBookCopy().setStatus(Status.AVAILABLE);
