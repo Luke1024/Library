@@ -35,7 +35,7 @@ public class ServiceTest {
 
     private static User user = new User("Firstname", "Lastname", LocalDate.now());
     private static Title title = new Title("Title", "Author", 2019);
-    private static BookCopyDto bookCopyDto = new BookCopyDto(1L,"Title", Status.AVAILABLE);
+    private static BookCopyDto bookCopyDto = new BookCopyDto(1L,"Title","Author", Status.AVAILABLE);
 
     private void addUser(){
         userService.addUser(user);

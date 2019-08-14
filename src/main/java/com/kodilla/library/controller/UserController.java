@@ -24,7 +24,7 @@ public class UserController {
         return userMapper.mapToUserDtoList(userService.getAllUsers());
     }
 
-    @RequestMapping(method = RequestMethod.GET, value = "/users")
+    @RequestMapping(method = RequestMethod.GET, value = "/users/{id}")
     public UserDto getUser(@PathVariable Long id) throws LibraryDatabaseException {
         return userMapper.mapToUserDto(userService.findUserById(id));
     }
@@ -34,7 +34,7 @@ public class UserController {
         userService.addUser(userMapper.mapToUserFromCreationDto(userCreationDto));
     }
 
-    @RequestMapping(method = RequestMethod.DELETE, value = "/delete")
+    @RequestMapping(method = RequestMethod.DELETE, value = "/users/{id}")
     public void deleteUser(@PathVariable Long id){
         userService.deleteUserById(id);
     }

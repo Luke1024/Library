@@ -36,8 +36,8 @@ public class BookCopyController {
         bookCopyService.changeBookStatus(bookCopyStatusChangerDto);
     }
 
-    @RequestMapping(method = RequestMethod.DELETE, value = "/copies")
-    public void deleteBookCopy(@RequestParam Long id) {
+    @RequestMapping(method = RequestMethod.DELETE, value = "/copies/{id}")
+    public void deleteBookCopy(@PathVariable Long id) {
         bookCopyService.deleteById(id);
     }
 }

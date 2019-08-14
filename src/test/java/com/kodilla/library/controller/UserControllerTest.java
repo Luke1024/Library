@@ -24,9 +24,11 @@ import java.util.List;
 
 import static org.junit.Assert.*;
 import static org.mockito.Mockito.when;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.hasSize;
 
 @RunWith(SpringRunner.class)
 @WebMvcTest(UserController.class)
@@ -43,15 +45,37 @@ public class UserControllerTest {
 
     @Test
     public void getUsers() throws Exception {
-        List<User> users = new ArrayList<>(Arrays.asList(new User("Bruce", "Lee", LocalDate.now())));
-        List<UserDto> userDtos = new ArrayList<>(Arrays.asList(new UserDto()));
+        List<User> users = new ArrayList<>(Arrays.asList(new User(1L ,"Bruce", "Lee", LocalDate.now())));
+        List<UserDto> userDtos = new ArrayList<>(Arrays.asList(new UserDto(1L, "Bruce", "Lee", LocalDate.now())));
 
         when(userService.getAllUsers()).thenReturn(users);
         when(userMapper.mapToUserDtoList(ArgumentMatchers.any())).thenReturn(userDtos);
 
         mockMvc.perform(get("/library/users")
-                .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().isOk());
+                .contentType(MediaType.APPLICATION_JSON)
+                .characterEncoding("UTF-8"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$", hasSize(1)))
+                .andExpect(jsonPath("$[0].id", is(1)))
+                .andExpect(jsonPath("$[0].firstName", is("Bruce")))
+                .andExpect(jsonPath("$[0].lastName", is("Lee")));
+    }
+
+    @Test
+    public void getUser() throws Exception {
+        User user = new User(1L ,"Bruce", "Lee", LocalDate.now());
+        UserDto userDto = new UserDto(1L, "Bruce", "Lee", LocalDate.now());
+
+        when(userMapper.mapToUserDto(ArgumentMatchers.any())).thenReturn(userDto);
+
+        mockMvc.perform(get("/library/users/1")
+                .contentType(MediaType.APPLICATION_JSON)
+                .characterEncoding("UTF-8"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.id", is(1)))
+                .andExpect(jsonPath("$.firstName", is("Bruce")))
+                .andExpect(jsonPath("$.lastName", is("Lee")));
+
     }
 
     @Test
@@ -64,6 +88,13 @@ public class UserControllerTest {
                 .contentType(MediaType.APPLICATION_JSON)
                 .characterEncoding("UTF-8")
                 .content(jsonContent))
+                .andExpect(status().isOk());
+    }
+
+    @Test
+    public void deleteUser() throws Exception {
+        mockMvc.perform(delete("/library/users/1")
+                .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk());
     }
 }

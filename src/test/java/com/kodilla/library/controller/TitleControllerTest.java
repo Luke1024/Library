@@ -21,9 +21,11 @@ import java.util.Arrays;
 import java.util.List;
 
 import static org.mockito.Mockito.when;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.hamcrest.Matchers.hasSize;
+import static org.hamcrest.Matchers.is;
 
 @RunWith(SpringRunner.class)
 @WebMvcTest(TitleController.class)
@@ -47,8 +49,31 @@ public class TitleControllerTest {
         when(titleMapper.mapToTitlesDtoList(ArgumentMatchers.any())).thenReturn(titleDtos);
 
         mockMvc.perform(get("/library/titles")
-                .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().isOk());
+                .contentType(MediaType.APPLICATION_JSON)
+                .characterEncoding("UTF-8"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$", hasSize(1)))
+                .andExpect(jsonPath("$[0].titleId", is(1)))
+                .andExpect(jsonPath("$[0].title", is("Title")))
+                .andExpect(jsonPath("$[0].author", is("Author")))
+                .andExpect(jsonPath("$[0].publicationYear", is(2019)));
+    }
+
+    @Test
+    public void getTitle() throws Exception {
+        Title title = new Title("Title", "Author", 2019);
+        TitleDto titleDto = new TitleDto(1L, "Title", "Author", 2019);
+
+        when(titleMapper.mapToTitleDto(ArgumentMatchers.any())).thenReturn(titleDto);
+
+        mockMvc.perform(get("/library/titles/1")
+                .contentType(MediaType.APPLICATION_JSON)
+                .characterEncoding("UTF-8"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.titleId", is(1)))
+                .andExpect(jsonPath("$.title", is("Title")))
+                .andExpect(jsonPath("$.author", is("Author")))
+                .andExpect(jsonPath("$.publicationYear", is(2019)));
     }
 
     @Test
@@ -61,6 +86,14 @@ public class TitleControllerTest {
                 .contentType(MediaType.APPLICATION_JSON)
                 .characterEncoding("UTF-8")
                 .content(jsonContent))
+                .andExpect(status().isOk());
+    }
+
+    @Test
+    public void deleteTitle() throws Exception {
+        mockMvc.perform(delete("/library/titles/1")
+                .contentType(MediaType.APPLICATION_JSON)
+                .characterEncoding("UTF-8"))
                 .andExpect(status().isOk());
     }
 }
