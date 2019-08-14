@@ -21,4 +21,8 @@ public class TitleMapper {
         return new Title(titleCreationDto.getTitle(),
                 titleCreationDto.getAuthor(), titleCreationDto.getYearOfPublication());
     }
+
+    public TitleDto mapToTitleDto(Title title){
+        return new TitleDto(title.getId(), title.getTitle(), title.getAuthor(), title.getPublicationYear());
+    }
 }

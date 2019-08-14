@@ -67,4 +67,8 @@ public class BookCopyService {
             throw new LibraryDatabaseException((LibraryDatabaseException.BOOK_COPY_NOT_FOUND));
         }
     }
+
+    public void deleteById(Long id) {
+        bookCopyRepository.delete(id);
+    }
 }
