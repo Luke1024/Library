@@ -54,14 +54,11 @@ public class BookCopyControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$", hasSize(1)))
                 .andExpect(jsonPath("$[0].titleId", is(1)))
-                .andExpect(jsonPath("$[0].title", is("Title")))
-                .andExpect(jsonPath("$[0].author", is("Author")))
                 .andExpect(jsonPath("$[0].status", is("AVAILABLE")));
     }
 
     @Test
     public void getCopyByTitleId() throws Exception {
-        BookCopy bookCopie = new BookCopy(new Title("Title", "Author", 2019), Status.AVAILABLE);
         BookCopyDto bookCopiesDto = new BookCopyDto(1L, Status.AVAILABLE);
 
         when(bookCopyMapper.mapToBookCopyDto(ArgumentMatchers.any())).thenReturn(bookCopiesDto);
@@ -70,8 +67,6 @@ public class BookCopyControllerTest {
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.titleId", is(1)))
-                .andExpect(jsonPath("$.title", is("Title")))
-                .andExpect(jsonPath("$.author", is("Author")))
                 .andExpect(jsonPath("$.status", is("AVAILABLE")));
     }
 
