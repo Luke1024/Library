@@ -27,6 +27,14 @@ public class Rent {
         this.dateOfRental = dateOfRental;
     }
 
+    public Rent(Long id ,User user, BookCopy bookCopy, LocalDate dateOfRental, LocalDate dateOfReturn) {
+        this.id = id;
+        this.user = user;
+        this.bookCopy = bookCopy;
+        this.dateOfRental = dateOfRental;
+        this.dateOfReturn = dateOfReturn;
+    }
+
     public void setUser(User user) {
         this.user = user;
     }

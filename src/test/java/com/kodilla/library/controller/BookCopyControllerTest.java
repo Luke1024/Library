@@ -45,11 +45,11 @@ public class BookCopyControllerTest {
         List<BookCopy> bookCopies = new ArrayList<>(
                 Arrays.asList(new BookCopy(new Title("Title", "Author", 2019), Status.AVAILABLE)));
         List<BookCopyDto> bookCopiesDtos = new ArrayList<>(
-                Arrays.asList(new BookCopyDto(1L, "Title", "Author" ,Status.AVAILABLE)));
+                Arrays.asList(new BookCopyDto(1L,Status.AVAILABLE)));
 
         when(bookCopyMapper.mapToBookCopyDtoList(ArgumentMatchers.any())).thenReturn(bookCopiesDtos);
 
-        mockMvc.perform(get("/library/copies/{titleId}", 1)
+        mockMvc.perform(get("/library/copies/title/1")
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$", hasSize(1)))
@@ -57,6 +57,22 @@ public class BookCopyControllerTest {
                 .andExpect(jsonPath("$[0].title", is("Title")))
                 .andExpect(jsonPath("$[0].author", is("Author")))
                 .andExpect(jsonPath("$[0].status", is("AVAILABLE")));
+    }
+
+    @Test
+    public void getCopyByTitleId() throws Exception {
+        BookCopy bookCopie = new BookCopy(new Title("Title", "Author", 2019), Status.AVAILABLE);
+        BookCopyDto bookCopiesDto = new BookCopyDto(1L, Status.AVAILABLE);
+
+        when(bookCopyMapper.mapToBookCopyDto(ArgumentMatchers.any())).thenReturn(bookCopiesDto);
+
+        mockMvc.perform(get("/library/copies/1")
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.titleId", is(1)))
+                .andExpect(jsonPath("$.title", is("Title")))
+                .andExpect(jsonPath("$.author", is("Author")))
+                .andExpect(jsonPath("$.status", is("AVAILABLE")));
     }
 
     @Test

@@ -1,6 +1,7 @@
 package com.kodilla.library.domain;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity(name = "titles")
@@ -26,6 +27,7 @@ public class Title {
         this.title = title;
         this.author = author;
         this.publicationYear = publicationYear;
+        this.bookCopies = new ArrayList<>();
     }
 
     public Title(Long id, String title, String author, int publicationYear) {

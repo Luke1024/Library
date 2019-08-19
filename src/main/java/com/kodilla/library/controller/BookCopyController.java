@@ -21,9 +21,14 @@ public class BookCopyController {
     @Autowired
     private BookCopyService bookCopyService;
 
-    @RequestMapping(method = RequestMethod.GET, value = "/copies/{titleId}")
+    @RequestMapping(method = RequestMethod.GET, value = "/copies/title/{titleId}")
     public List<BookCopyDto> getAvailableCopiesByTitleId(@PathVariable Long titleId) throws LibraryDatabaseException {
         return bookCopyMapper.mapToBookCopyDtoList(bookCopyService.getAllAvailableCopiesByTitleId(titleId));
+    }
+
+    @RequestMapping(method = RequestMethod.GET, value = "/copies/{id}")
+    public BookCopyDto getCopyByTitleId(@PathVariable Long id) throws LibraryDatabaseException {
+        return bookCopyMapper.mapToBookCopyDto(bookCopyService.findBookCopyById(id));
     }
 
     @RequestMapping(method = RequestMethod.POST, value = "/copies")

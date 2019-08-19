@@ -50,12 +50,14 @@ public class BookCopyService {
 
     public List<BookCopy> getAllAvailableCopiesByTitleId(Long id) throws LibraryDatabaseException {
         Optional<Title> title = titleRepository.findById(id);
+        Title titleWithCopies;
         if(title.isPresent()) {
-            return title.get().getBookCopies();
+            titleWithCopies = title.get();
         } else {
             LOGGER.error(LibraryDatabaseException.TITLE_NOT_FOUND);
             throw new LibraryDatabaseException(LibraryDatabaseException.TITLE_NOT_FOUND);
         }
+        return titleWithCopies.getBookCopies();
     }
 
     public BookCopy findBookCopyById(Long id) throws LibraryDatabaseException {

@@ -28,8 +28,16 @@ public class BookCopyMapperTest {
     public void mapToBookCopyDtoList() {
         List<BookCopy> bookCopyList = new ArrayList<>(
                 Arrays.asList(new BookCopy(1L, new Title(1L, "Title", "Author", 2019), Status.AVAILABLE)));
-        List<BookCopyDto> bookCopyDtos = new ArrayList<>(Arrays.asList(new BookCopyDto(1L, "Title", "Author", Status.AVAILABLE)));
+        List<BookCopyDto> bookCopyDtos = new ArrayList<>(Arrays.asList(new BookCopyDto(1L, Status.AVAILABLE)));
 
         assertThat(bookCopyDtos, sameBeanAs(bookCopyMapper.mapToBookCopyDtoList(bookCopyList)));
+    }
+
+    @Test
+    public void mapToBookCopyDto(){
+        BookCopy bookCopy = new BookCopy(1L, new Title(1L, "Title", "Author", 2019), Status.AVAILABLE);
+        BookCopyDto bookCopyDto = new BookCopyDto(1L, Status.AVAILABLE);
+
+        assertThat(bookCopyDto, sameBeanAs(bookCopyMapper.mapToBookCopyDto(bookCopy)));
     }
 }

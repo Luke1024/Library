@@ -38,4 +38,12 @@ public class TitleMapperTest {
 
         assertThat(title, sameBeanAs(titleMapper.mapToTitleFromCreationDto(titleCreationDto)));
     }
+
+    @Test
+    public void mapToTitleDto(){
+        Title title = new Title(1L, "Title", "Author", 2019);
+        TitleDto titleDto = new TitleDto(1L, "Title", "Author", 2019);
+
+        assertThat(titleDto, sameBeanAs(titleMapper.mapToTitleDto(title)));
+    }
 }

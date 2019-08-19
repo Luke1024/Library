@@ -26,7 +26,7 @@ public class UserController {
 
     @RequestMapping(method = RequestMethod.GET, value = "/users/{id}")
     public UserDto getUser(@PathVariable Long id) throws LibraryDatabaseException {
-        return userMapper.mapToUserDto(userService.findUserById(id));
+        return userMapper.mapToUserDto(userService.getUserById(id));
     }
 
     @RequestMapping(method = RequestMethod.POST, value = "/users")

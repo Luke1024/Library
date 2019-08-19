@@ -33,6 +33,14 @@ public class UserMapperTest {
     }
 
     @Test
+    public void mapToUserDto() {
+        User user = new User(1L, "Firstname", "Lastname", LocalDate.now());
+        UserDto userDto = new UserDto(1L, "Firstname", "Lastname", LocalDate.now());
+
+        assertThat(userDto, sameBeanAs(userMapper.mapToUserDto(user)));
+    }
+
+    @Test
     public void mapToUserFromCreationDto() {
         UserCreationDto userCreationDto = new UserCreationDto("Firstname", "Lastname");
         User user = new User("Firstname", "Lastname", LocalDate.now());

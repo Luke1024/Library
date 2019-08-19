@@ -21,7 +21,7 @@ public class UserService {
         return userRepository.findAll();
     }
 
-    public User findUserById(Long id) throws LibraryDatabaseException {
+    public User getUserById(Long id) throws LibraryDatabaseException {
         Optional<User> user = userRepository.findById(id);
         if(user.isPresent()){
             LOGGER.info("User with id: " + id + " found.");
