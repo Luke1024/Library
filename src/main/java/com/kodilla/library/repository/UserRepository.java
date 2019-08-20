@@ -1,10 +1,7 @@
 package com.kodilla.library.repository;
 
 import com.kodilla.library.domain.User;
-import javafx.concurrent.Task;
 import org.springframework.data.repository.CrudRepository;
-
-import java.awt.print.Book;
 import java.util.List;
 import java.util.Optional;
 

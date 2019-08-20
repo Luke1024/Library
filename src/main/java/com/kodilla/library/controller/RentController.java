@@ -29,27 +29,27 @@ public class RentController {
         return e.getMessage();
     }
 
-    @RequestMapping(method = RequestMethod.GET, value = "/rent")
+    @GetMapping(value = "/rent")
     public List<RentDto> getAllRents(){
         return rentMapper.mapToDtoRentDtoList(rentService.getAllRents());
     }
 
-    @RequestMapping(method = RequestMethod.GET, value = "/rent/{id}")
+    @GetMapping(value = "/rent/{id}")
     public RentDto getRent(@PathVariable Long id) throws LibraryDatabaseException {
         return rentMapper.mapToRentDto(rentService.findRentById(id));
     }
 
-    @RequestMapping(method = RequestMethod.PUT, value = "/rent/borrow")
+    @PutMapping(value = "/rent/borrow")
     public void borrowABook(@RequestBody BorrowReturnDto borrowReturnDto) throws LibraryDatabaseException {
         rentService.borrowABook(borrowReturnDto);
     }
 
-    @RequestMapping(method = RequestMethod.PUT, value = "/rent/return")
+    @PutMapping(value = "/rent/return")
     public void returnCopy(@RequestBody BorrowReturnDto borrowReturnDto) throws LibraryDatabaseException {
         rentService.returnABook(borrowReturnDto);
     }
 
-    @RequestMapping(method = RequestMethod.DELETE, value = "/rent/{id}")
+    @DeleteMapping(value = "/rent/{id}")
     public void deleteRent(@PathVariable Long id){
         rentService.deleteRentById(id);
     }

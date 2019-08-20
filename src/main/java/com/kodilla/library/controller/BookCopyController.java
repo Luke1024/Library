@@ -28,27 +28,27 @@ public class BookCopyController {
         return e.getMessage();
     }
 
-    @RequestMapping(method = RequestMethod.GET, value = "/copies/title/{titleId}")
+    @GetMapping(value = "/copies/title/{titleId}")
     public List<BookCopyDto> getAvailableCopiesByTitleId(@PathVariable Long titleId) throws LibraryDatabaseException {
         return bookCopyMapper.mapToBookCopyDtoList(bookCopyService.getAllAvailableCopiesByTitleId(titleId));
     }
 
-    @RequestMapping(method = RequestMethod.GET, value = "/copies/{id}")
+    @GetMapping(value = "/copies/{id}")
     public BookCopyDto getCopyByTitleId(@PathVariable Long id) throws LibraryDatabaseException {
         return bookCopyMapper.mapToBookCopyDto(bookCopyService.findBookCopyById(id));
     }
 
-    @RequestMapping(method = RequestMethod.POST, value = "/copies")
+    @PostMapping(value = "/copies")
     public void addBookCopy(@RequestBody BookCopyDto bookCopyDto) throws LibraryDatabaseException {
         bookCopyService.saveBookCopyFromBookCopyDto(bookCopyDto);
     }
 
-    @RequestMapping(method = RequestMethod.PUT, value = "/copies/status")
+    @PutMapping(value = "/copies/status")
     public void changeBookCopyStatus(@RequestBody BookCopyStatusChangerDto bookCopyStatusChangerDto) throws LibraryDatabaseException {
         bookCopyService.changeBookStatus(bookCopyStatusChangerDto);
     }
 
-    @RequestMapping(method = RequestMethod.DELETE, value = "/copies/{id}")
+    @DeleteMapping(value = "/copies/{id}")
     public void deleteBookCopy(@PathVariable Long id) {
         bookCopyService.deleteById(id);
     }

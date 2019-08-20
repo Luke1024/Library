@@ -26,22 +26,22 @@ public class UserController {
         return e.getMessage();
     }
 
-    @RequestMapping(method = RequestMethod.GET, value = "/users")
+    @GetMapping(value = "/users")
     public List<UserDto> getUsers(){
         return userMapper.mapToUserDtoList(userService.getAllUsers());
     }
 
-    @RequestMapping(method = RequestMethod.GET, value = "/users/{id}")
+    @GetMapping(value = "/users/{id}")
     public UserDto getUser(@PathVariable Long id) throws LibraryDatabaseException {
         return userMapper.mapToUserDto(userService.getUserById(id));
     }
 
-    @RequestMapping(method = RequestMethod.POST, value = "/users")
+    @PostMapping(value = "/users")
     public void addUser(@RequestBody UserCreationDto userCreationDto){
         userService.addUser(userMapper.mapToUserFromCreationDto(userCreationDto));
     }
 
-    @RequestMapping(method = RequestMethod.DELETE, value = "/users/{id}")
+    @DeleteMapping(value = "/users/{id}")
     public void deleteUser(@PathVariable Long id){
         userService.deleteUserById(id);
     }

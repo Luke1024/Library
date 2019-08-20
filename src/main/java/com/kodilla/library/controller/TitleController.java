@@ -27,22 +27,22 @@ public class TitleController {
         return e.getMessage();
     }
 
-    @RequestMapping(method = RequestMethod.GET, value = "/titles")
+    @GetMapping(value = "/titles")
     public List<TitleDto> getTitles(){
         return titleMapper.mapToTitlesDtoList(titleService.getAllTitles());
     }
 
-    @RequestMapping(method = RequestMethod.GET, value = "/titles/{id}")
+    @GetMapping(value = "/titles/{id}")
     public TitleDto getTitle(@PathVariable Long id) throws LibraryDatabaseException {
         return titleMapper.mapToTitleDto(titleService.getTitle(id));
     }
 
-    @RequestMapping(method = RequestMethod.POST, value = "/titles")
+    @PostMapping(value = "/titles")
     public void addTitle(@RequestBody TitleCreationDto titleCreationDto){
         titleService.addTitle(titleMapper.mapToTitleFromCreationDto(titleCreationDto));
     }
 
-    @RequestMapping(method = RequestMethod.DELETE, value = "/titles/{id}")
+    @DeleteMapping(value = "/titles/{id}")
     public void deleteTitle(@PathVariable Long id) {
         titleService.deleteTitleById(id);
     }
