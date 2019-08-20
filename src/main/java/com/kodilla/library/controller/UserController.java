@@ -5,6 +5,7 @@ import com.kodilla.library.domain.dto.UserDto;
 import com.kodilla.library.mapper.UserMapper;
 import com.kodilla.library.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import com.kodilla.library.controller.controllerExceptions.LibraryDatabaseException;
 import java.util.List;
@@ -18,6 +19,12 @@ public class UserController {
 
     @Autowired
     private UserService userService;
+
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ExceptionHandler(value = LibraryDatabaseException.class)
+    public String handleLibraryDatabaseException(LibraryDatabaseException e){
+        return e.getMessage();
+    }
 
     @RequestMapping(method = RequestMethod.GET, value = "/users")
     public List<UserDto> getUsers(){

@@ -6,6 +6,7 @@ import com.kodilla.library.mapper.TitleMapper;
 import com.kodilla.library.service.TitleService;
 import com.kodilla.library.controller.controllerExceptions.LibraryDatabaseException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -19,6 +20,12 @@ public class TitleController {
 
     @Autowired
     private TitleService titleService;
+
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ExceptionHandler(value = LibraryDatabaseException.class)
+    public String handleLibraryDatabaseException(LibraryDatabaseException e){
+        return e.getMessage();
+    }
 
     @RequestMapping(method = RequestMethod.GET, value = "/titles")
     public List<TitleDto> getTitles(){
