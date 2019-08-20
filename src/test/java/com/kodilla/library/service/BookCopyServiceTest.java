@@ -67,7 +67,7 @@ public class BookCopyServiceTest {
                 .filter(b -> b.getTitle().getId()==titleId)
                 .collect(Collectors.toList());
 
-        assertTrue(bookCopyMatched.size()==1);
+        assertEquals(1,bookCopyMatched.size());
     }
 
     @Test
@@ -83,7 +83,7 @@ public class BookCopyServiceTest {
         bookCopyService.saveBookCopyFromBookCopyDto(bookCopyDto2);
 
         List<BookCopy> availableCopies = bookCopyService.getAllAvailableCopiesByTitleId(titleId);
-        assertTrue(availableCopies.size()==2);
+        assertEquals(2, availableCopies.size());
     }
 
     @Test
@@ -99,7 +99,7 @@ public class BookCopyServiceTest {
         BookCopy bookCopy = bookCopies.get(0);
         Long bookCopyId = bookCopy.getId();
 
-        assertTrue(bookCopyService.findBookCopyById(bookCopyId).getId()==bookCopyId);
+        assertEquals(bookCopyId, bookCopyService.findBookCopyById(bookCopyId).getId());
     }
 
     @Test(expected = LibraryDatabaseException.class)

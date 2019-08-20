@@ -68,7 +68,7 @@ public class RentServiceTest {
                 f.getUser().getId()==userId2 && f.getBookCopy().getId()==bookCopyId2)
         .collect(Collectors.toList());
 
-        Assert.assertTrue(matchedRents.size()==2);
+        Assert.assertEquals(2,matchedRents.size());
     }
 
     @Test
@@ -98,7 +98,7 @@ public class RentServiceTest {
                 f.getUser().getId()==userId1 && f.getBookCopy().getId()==bookCopyId1)
                 .collect(Collectors.toList());
 
-        Assert.assertTrue(matchedRent.size()==0);
+        Assert.assertEquals(0,matchedRent.size());
     }
 
     @Test
