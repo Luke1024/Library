@@ -41,13 +41,11 @@ public class RentServiceTest {
 
         User user1 = new User("Firstname1", "Lastname1", LocalDate.now());
         User user2 = new User("Firstname2", "Lastname2", LocalDate.now());
-
         userRepository.save(user1);
         userRepository.save(user2);
 
         Title title1 = new Title("Title1", "Author1", 2019);
         Title title2 = new Title("Title2", "Author2", 2019);
-
         titleRepository.save(title1);
         titleRepository.save(title2);
 
@@ -59,7 +57,6 @@ public class RentServiceTest {
 
         bookCopyRepository.save(bookCopy1);
         bookCopyRepository.save(bookCopy2);
-
         Long bookCopyId1 = bookCopy1.getId();
         Long bookCopyId2 = bookCopy2.getId();
 
@@ -71,28 +68,20 @@ public class RentServiceTest {
                 f.getUser().getId()==userId2 && f.getBookCopy().getId()==bookCopyId2)
         .collect(Collectors.toList());
 
-        Assert.assertTrue(matchedRents.size()>0);
-
-        //Clean up
-        matchedRents.stream().forEach(r -> rentService.deleteRentById(r.getId()));
+        Assert.assertTrue(matchedRents.size()==2);
     }
 
     @Test
     public void deleteRentById() throws LibraryDatabaseException {
         User user1 = new User("Firstname1", "Lastname1", LocalDate.now());
-
         userRepository.save(user1);
+        Long userId1 = user1.getId();
 
         Title title1 = new Title("Title1", "Author1", 2019);
-
         titleRepository.save(title1);
 
         BookCopy bookCopy1 = new BookCopy(title1, Status.AVAILABLE);
-
-        Long userId1 = user1.getId();
-
         bookCopyRepository.save(bookCopy1);
-
         Long bookCopyId1 = bookCopy1.getId();
 
         rentService.borrowABook(new BorrowReturnDto(userId1, bookCopyId1));
@@ -116,23 +105,17 @@ public class RentServiceTest {
     public void returnABook() throws LibraryDatabaseException {
 
         User user1 = new User("Firstname1", "Lastname1", LocalDate.now());
-
         userRepository.save(user1);
+        Long userId1 = user1.getId();
 
         Title title1 = new Title("Title1", "Author1", 2019);
-
         titleRepository.save(title1);
 
         BookCopy bookCopy1 = new BookCopy(title1, Status.AVAILABLE);
-
-        Long userId1 = user1.getId();
-
         bookCopyRepository.save(bookCopy1);
-
         Long bookCopyId1 = bookCopy1.getId();
 
         rentService.borrowABook(new BorrowReturnDto(userId1, bookCopyId1));
-
         rentService.returnABook(new BorrowReturnDto(userId1, bookCopyId1));
 
         List<Rent> matchedRent = rentService.getAllRents().stream().filter(f ->

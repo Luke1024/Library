@@ -19,8 +19,6 @@ public interface BookCopyRepository extends CrudRepository<BookCopy, Long> {
 
     void deleteById(Long id);
 
-    //List<BookCopy> findBookCopiesByTitleId(Long titleId);
-
     @Override
     long count();
 }

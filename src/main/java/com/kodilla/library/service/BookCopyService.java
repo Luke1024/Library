@@ -71,6 +71,6 @@ public class BookCopyService {
     }
 
     public void deleteById(Long id) {
-        bookCopyRepository.delete(id);
+        bookCopyRepository.deleteById(id);
     }
 }

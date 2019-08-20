@@ -2,7 +2,6 @@ package com.kodilla.library.service;
 
 import com.kodilla.library.controller.controllerExceptions.LibraryDatabaseException;
 import com.kodilla.library.domain.Title;
-import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,10 +37,6 @@ public class TitleServiceTest {
 
         assertThat(title1, sameBeanAs(titlesFiltered.get(0)));
         assertThat(title2, sameBeanAs(titlesFiltered.get(1)));
-
-        //clean up
-        titleService.deleteTitleById(title1.getId());
-        titleService.deleteTitleById(title2.getId());
     }
 
     @Test
@@ -50,22 +45,18 @@ public class TitleServiceTest {
         titleService.addTitle(title1);
 
         assertThat(title1, sameBeanAs(titleService.getTitle(title1.getId())));
-
-        //clean up
-        titleService.deleteTitleById(title1.getId());
     }
 
     @Test(expected = LibraryDatabaseException.class)
     public void deleteTitleById() throws LibraryDatabaseException {
         Title title1 = new Title("Title1", "Author1", 2019);
         titleService.addTitle(title1);
-
         Long id = title1.getId();
 
         assertThat(title1, sameBeanAs(titleService.getTitle(id)));
 
         titleService.deleteTitleById(id);
 
-        titleService.deleteTitleById(id);
+        Title title = titleService.getTitle(id);
     }
 }

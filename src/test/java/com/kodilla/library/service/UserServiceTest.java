@@ -38,10 +38,6 @@ public class UserServiceTest {
 
         assertThat(user1, sameBeanAs(usersFiltered.get(0)));
         assertThat(user2, sameBeanAs(usersFiltered.get(1)));
-
-        //clean up
-        userService.deleteUserById(user1.getId());
-        userService.deleteUserById(user2.getId());
     }
 
     @Test
@@ -50,9 +46,6 @@ public class UserServiceTest {
         userService.addUser(user1);
 
         assertThat(user1, sameBeanAs(userService.getUserById(user1.getId())));
-
-        //clean up
-        userService.deleteUserById(user1.getId());
     }
 
     @Test(expected = LibraryDatabaseException.class)
@@ -62,10 +55,8 @@ public class UserServiceTest {
 
         Long id = user1.getId();
 
-        assertThat(user1, sameBeanAs(userService.getUserById(id)));
-
         userService.deleteUserById(id);
 
-        userService.deleteUserById(id);
+        User user = userService.getUserById(id);
     }
 }

@@ -41,34 +41,26 @@ public class BookCopyServiceTest {
         Title title = new Title("Title", "Author", 2019);
         titleRepository.save(title);
 
-        Long titleId = title.getId();
-
         BookCopy bookCopy = new BookCopy(title, Status.AVAILABLE);
 
         bookCopyRepository.save(bookCopy);
         Long bookCopyId = bookCopy.getId();
 
         BookCopyStatusChangerDto bookCopyStatusChangerDto = new BookCopyStatusChangerDto(bookCopyId , Status.LOANED);
-
         bookCopyService.changeBookStatus(bookCopyStatusChangerDto);
 
         Optional<BookCopy> bookCopyRetrieved = bookCopyRepository.findById(bookCopyId);
 
         assertEquals(bookCopyRetrieved.get().getStatus(), Status.LOANED);
-
-        //Clean up
-        bookCopyService.deleteById(bookCopyId);
     }
 
     @Test
     public void saveBookCopyFromBookCopyDto() throws LibraryDatabaseException {
         Title title = new Title("Title", "Author", 2019);
         titleRepository.save(title);
-
         Long titleId = title.getId();
 
         BookCopyDto bookCopyDto = new BookCopyDto(titleId, Status.AVAILABLE);
-
         bookCopyService.saveBookCopyFromBookCopyDto(bookCopyDto);
 
         List<BookCopy> bookCopyMatched = bookCopyRepository.findAll().stream()
@@ -76,78 +68,54 @@ public class BookCopyServiceTest {
                 .collect(Collectors.toList());
 
         assertTrue(bookCopyMatched.size()==1);
-
-        Long matchedBookCopyId = bookCopyMatched.get(0).getId();
-
-        //Clean up
-        bookCopyRepository.deleteById(matchedBookCopyId);
     }
 
     @Test
     public void getAllAvailableCopiesByTitleId() throws LibraryDatabaseException {
         Title title = new Title("Title", "Author", 2019);
         titleRepository.save(title);
-
         Long titleId = title.getId();
 
         BookCopyDto bookCopyDto1 = new BookCopyDto(titleId, Status.AVAILABLE);
-
         BookCopyDto bookCopyDto2 = new BookCopyDto(titleId, Status.AVAILABLE);
 
         bookCopyService.saveBookCopyFromBookCopyDto(bookCopyDto1);
         bookCopyService.saveBookCopyFromBookCopyDto(bookCopyDto2);
 
         List<BookCopy> availableCopies = bookCopyService.getAllAvailableCopiesByTitleId(titleId);
-
-        System.out.println(availableCopies.size());
-
         assertTrue(availableCopies.size()==2);
-
-        //Clean up
-        titleRepository.deleteById(titleId);
     }
 
     @Test
     public void findBookCopyById() throws LibraryDatabaseException {
         Title title = new Title("Title", "Author", 2019);
         titleRepository.save(title);
-
         Long titleId = title.getId();
 
         BookCopyDto bookCopyDto = new BookCopyDto(titleId, Status.AVAILABLE);
-
         bookCopyService.saveBookCopyFromBookCopyDto(bookCopyDto);
 
         List<BookCopy> bookCopies = bookCopyRepository.findAll();
-
         BookCopy bookCopy = bookCopies.get(0);
-
         Long bookCopyId = bookCopy.getId();
 
         assertTrue(bookCopyService.findBookCopyById(bookCopyId).getId()==bookCopyId);
-
-        titleRepository.deleteById(titleId);
     }
 
     @Test
     public void deleteById() throws LibraryDatabaseException {
         Title title = new Title("Title", "Author", 2019);
         titleRepository.save(title);
-
         Long titleId = title.getId();
 
         BookCopyDto bookCopyDto = new BookCopyDto(titleId, Status.AVAILABLE);
-
         bookCopyService.saveBookCopyFromBookCopyDto(bookCopyDto);
 
         List<BookCopy> bookCopies = bookCopyRepository.findAll();
-
         BookCopy bookCopy = bookCopies.get(0);
-
         Long bookCopyIdToDelete = bookCopy.getId();
-
         bookCopyService.deleteById(bookCopyIdToDelete);
 
-        assertFalse(bookCopyRepository.findById(bookCopyIdToDelete).isPresent());
+        BookCopy bookCopy1 = bookCopyService.findBookCopyById(bookCopyIdToDelete);
     }
 }
