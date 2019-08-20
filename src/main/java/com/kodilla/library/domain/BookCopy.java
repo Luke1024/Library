@@ -9,11 +9,10 @@ public class BookCopy {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "TITLE_ID")
     private Title title;
     private Status status;
-
 
     public BookCopy() {}
 

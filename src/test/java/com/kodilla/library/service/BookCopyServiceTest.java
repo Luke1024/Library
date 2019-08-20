@@ -102,7 +102,7 @@ public class BookCopyServiceTest {
         assertTrue(bookCopyService.findBookCopyById(bookCopyId).getId()==bookCopyId);
     }
 
-    @Test
+    @Test(expected = LibraryDatabaseException.class)
     public void deleteById() throws LibraryDatabaseException {
         Title title = new Title("Title", "Author", 2019);
         titleRepository.save(title);
@@ -114,6 +114,7 @@ public class BookCopyServiceTest {
         List<BookCopy> bookCopies = bookCopyRepository.findAll();
         BookCopy bookCopy = bookCopies.get(0);
         Long bookCopyIdToDelete = bookCopy.getId();
+
         bookCopyService.deleteById(bookCopyIdToDelete);
 
         BookCopy bookCopy1 = bookCopyService.findBookCopyById(bookCopyIdToDelete);
