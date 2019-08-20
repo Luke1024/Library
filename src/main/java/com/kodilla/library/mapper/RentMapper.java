@@ -9,7 +9,7 @@ import java.util.stream.Collectors;
 
 @Component
 public class RentMapper {
-    public List<RentDto> mapToDtoRentDtoList(List<Rent> rentList) {
+    public List<RentDto> mapToDtoRentDtoList(final List<Rent> rentList) {
         return rentList.stream().map(rent -> new RentDto(
                 rent.getId(),
                 rent.getUser().getId(),
@@ -21,7 +21,7 @@ public class RentMapper {
                 rent.getDateOfReturn())).collect(Collectors.toList());
     }
 
-    public RentDto mapToRentDto(Rent rent){
+    public RentDto mapToRentDto(final Rent rent){
         return new RentDto(rent.getId(),
                 rent.getUser().getId(),
                 rent.getUser().getFirstName(),

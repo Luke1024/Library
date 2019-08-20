@@ -17,12 +17,12 @@ public class TitleMapper {
                 .collect(Collectors.toList());
     }
 
-    public Title mapToTitleFromCreationDto(TitleCreationDto titleCreationDto){
+    public Title mapToTitleFromCreationDto(final TitleCreationDto titleCreationDto){
         return new Title(titleCreationDto.getTitle(),
                 titleCreationDto.getAuthor(), titleCreationDto.getYearOfPublication());
     }
 
-    public TitleDto mapToTitleDto(Title title){
+    public TitleDto mapToTitleDto(final Title title){
         return new TitleDto(title.getId(), title.getTitle(), title.getAuthor(), title.getPublicationYear());
     }
 }

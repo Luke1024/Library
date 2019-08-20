@@ -16,7 +16,6 @@ import java.util.List;
 import static com.shazam.shazamcrest.MatcherAssert.assertThat;
 import static com.shazam.shazamcrest.matcher.Matchers.sameBeanAs;
 
-
 @RunWith(SpringRunner.class)
 @SpringBootTest
 public class RentMapperTest {

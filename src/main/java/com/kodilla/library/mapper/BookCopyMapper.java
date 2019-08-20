@@ -15,7 +15,7 @@ public class BookCopyMapper {
                 .collect(Collectors.toList());
     }
 
-    public BookCopyDto mapToBookCopyDto(BookCopy bookCopy){
+    public BookCopyDto mapToBookCopyDto(final BookCopy bookCopy){
         return new BookCopyDto(bookCopy.getTitle().getId(), bookCopy.getStatus());
     }
 }

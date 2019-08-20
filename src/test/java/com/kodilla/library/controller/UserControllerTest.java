@@ -61,7 +61,6 @@ public class UserControllerTest {
 
     @Test
     public void getUser() throws Exception {
-        User user = new User(1L ,"Bruce", "Lee", LocalDate.now());
         UserDto userDto = new UserDto(1L, "Bruce", "Lee", LocalDate.now());
 
         when(userMapper.mapToUserDto(ArgumentMatchers.any())).thenReturn(userDto);
@@ -73,7 +72,6 @@ public class UserControllerTest {
                 .andExpect(jsonPath("$.id", is(1)))
                 .andExpect(jsonPath("$.firstName", is("Bruce")))
                 .andExpect(jsonPath("$.lastName", is("Lee")));
-
     }
 
     @Test
